@@ -79,7 +79,7 @@
   </BiomeDef>
  
 
- 
+ <!--
   <BiomeDef ParentName="ZMD_BaseBiome">
 	<defName>ZMD_DevTest</defName>
     <label>test</label>
@@ -88,7 +88,7 @@
 	<modExtensions>
 		<li Class="ZMapDesigner.ZMDBiomeModExtension">
 			<biomeMapSettings>	
-				<!--<caves>true</caves>-->
+				<caves>true</caves>
 				<coast>true</coast>
 				<mountainSettings>
 					<allowStoneTerrain>false</allowStoneTerrain>
@@ -122,7 +122,7 @@
         <max>999</max>
       </li>
     </terrainsByFertility>
-	<!--
+
     <terrainPatchMakers>
       <li>
         <perlinFrequency>0.015</perlinFrequency>
@@ -155,7 +155,7 @@
         </thresholds>
       </li>
     </terrainPatchMakers>
-	-->
+	
     <wildPlants>
 		<Plant_Grass>2.0</Plant_Grass>
 		<Plant_ShrubLow>1.0</Plant_ShrubLow>
@@ -165,31 +165,7 @@
     <wildAnimals>
 		<Tortoise>0.5</Tortoise>
     </wildAnimals>
-	
-<!-- New stuff starts here 
-	<worldMapSettings>					
-		<tempMin>-999</tempMin>
-		<tempMax>999</tempMax>
-		<rainfallMin>-9999</rainfallMin>
-		<rainfallMax>9999</rainfallMax>
-		<swampMin>-999</swampMin>
-		<swampMax>999</swampMax>
-		<hillinessMin>Flat</hillinessMin>
-		<hillinessMax>Impassable</hillinessMax>
-		
-	</worldMapSettings>
 
-
-	<biomeMapSettings>				
-		<deepOre>true</deepOre>
-		<geysers>true</geysers>
-		<mountains>true</mountains>
-		<mountainOre>true</mountainOre>
-		<ruins>true</ruins>
-		<shrines>true</shrines>
-		<coast>true</coast>
-	</biomeMapSettings>
-	 -->
   </BiomeDef>
-
+-->
 </Defs>
