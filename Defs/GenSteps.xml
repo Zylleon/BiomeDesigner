@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <GenStepDef>
+    <defName>ZMD_CenterShapeIrregular</defName>
+    <order>330</order>
+    <genStep Class="ZMapDesigner.GenSteps_ZMD.GenStep_CenterShapeIrregular" />
+  </GenStepDef>
+
+
+</Defs>
