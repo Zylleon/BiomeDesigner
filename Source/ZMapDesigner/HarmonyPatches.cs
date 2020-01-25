@@ -144,7 +144,7 @@ namespace ZMapDesigner
                     if (b.GetModExtension<ZMDBiomeModExtension>().worldMapSettings != null)
                     {
                         settings = b.GetModExtension<ZMDBiomeModExtension>().worldMapSettings;
-                        GenWorldMapBiomes.PlaceBiome_New(b, settings);
+                        GenWorldMapBiomes.PlaceBiome(b, settings);
                     }
                 }
             }

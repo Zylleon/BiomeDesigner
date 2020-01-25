@@ -91,18 +91,18 @@
 				<caves>true</caves>
 				<coast>true</coast>
 				<mountainSettings>
-					<allowStoneTerrain>false</allowStoneTerrain>
-					<allowGravel>false</allowGravel>
+					<allowStoneTerrain>true</allowStoneTerrain>
+					<allowGravel>true</allowGravel>
 					<frequency>0.021</frequency>
 					<lacunarity>2.0</lacunarity>
 				</mountainSettings>
 			</biomeMapSettings>
-			<worldMapSettings>		
-				<patchSize>1</patchSize>
+			<worldMapSettings>
+				<patchSize>3</patchSize>
 				<commonality>10</commonality>
-				<tempMin>0</tempMin>
-				<tempMax>15</tempMax>
-				<rainfallMin>600</rainfallMin>
+				<tempMin>-25</tempMin>
+				<tempMax>999</tempMax>
+				<rainfallMin>-9999</rainfallMin>
 				<rainfallMax>9999</rainfallMax>
 				<swampMin>-999</swampMin>
 				<swampMax>999</swampMax>
@@ -123,39 +123,6 @@
       </li>
     </terrainsByFertility>
 
-    <terrainPatchMakers>
-      <li>
-        <perlinFrequency>0.015</perlinFrequency>
-        <minFertility>2.0</minFertility>
-        <maxFertility>10.0</maxFertility>
-        <thresholds>
-          <li>
-            <terrain>Soil</terrain>
-            <min>-999</min>
-            <max>-0.30</max>
-          </li>
-		  <li>
-            <terrain>Sand</terrain>
-            <min>0.58</min>
-            <max>999</max>
-          </li>
-
-        </thresholds>
-      </li>
-	  <li>
-        <perlinFrequency>0.028</perlinFrequency>
-		<minFertility>3.0</minFertility>
-        <maxFertility>8.0</maxFertility>
-        <thresholds>
-          <li>
-            <terrain>SoilRich</terrain>
-            <min>0.25</min>
-            <max>999</max>
-          </li>
-        </thresholds>
-      </li>
-    </terrainPatchMakers>
-	
     <wildPlants>
 		<Plant_Grass>2.0</Plant_Grass>
 		<Plant_ShrubLow>1.0</Plant_ShrubLow>

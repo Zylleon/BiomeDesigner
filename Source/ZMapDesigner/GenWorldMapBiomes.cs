@@ -16,51 +16,8 @@ namespace ZMapDesigner
             WorldGrid worldGrid = Find.WorldGrid;
 
             List<int> usedTiles = new List<int>();
-            for (int i = 0; i < 500 && usedTiles.Count() < settings.NumberOfTiles(); i++)
-            {
-                int tileID = Rand.Range(0, worldGrid.TilesCount);
-
-                Tile tile = worldGrid[tileID];
-
-
-                // TODO: Make this do stuff. Properly.
-                if (settings.AllowedOn(tile))
-                {
-                    List<int> tmpTiles = new List<int>();
-                    tile.biome = biome;
-                    usedTiles.Add(tileID);
-                    while (usedTiles.Count() < settings.NumberOfTiles())
-                    {
-                        tmpTiles.Clear();
-
-                        worldGrid.GetTileNeighbors(tileID, tmpTiles);
-
-                        foreach (int id in tmpTiles)
-                        {
-                            //if (settings.AllowedOn)
-
-
-
-
-                        }
-
-
-                    }
-                }
-            }
-
-
-        }
-
-
-        public static void PlaceBiome_New(BiomeDef biome, WorldMapSettings settings)
-        {
-            WorldGrid worldGrid = Find.WorldGrid;
-
-            List<int> usedTiles = new List<int>();
             List<int> edgeTiles = new List<int>();
 
-            int totalCount = settings.NumberOfTiles();
 
             List<int> tmpTiles = new List<int>();
 
@@ -76,11 +33,14 @@ namespace ZMapDesigner
                 // if biome is allowed on that tile, start patch
                 if (settings.AllowedOn(tile))
                 {
+                    // roll patch size once per patch
+                    int totalCount = settings.NumberOfTiles();
+
                     tile.biome = biome;
                     usedTiles.Add(tileID);
                     edgeTiles.Add(tileID);
 
-                    while (edgeTiles.Count > 0 && usedTiles.Count() < settings.NumberOfTiles())
+                    while (edgeTiles.Count > 0 && usedTiles.Count() < totalCount)
                     {
                         tmpTiles.Clear();
 

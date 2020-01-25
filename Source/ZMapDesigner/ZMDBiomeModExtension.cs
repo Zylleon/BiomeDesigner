@@ -54,10 +54,10 @@ namespace ZMapDesigner
 
     public class WorldMapSettings
     {
-        public float tempMin = 0f;
+        public float tempMin = -25f;
         public float tempMax = 999f;
 
-        public float elevationMin = -9999f;
+        public float elevationMin = 0;
         public float elevationMax = 9999f;
 
         public float rainfallMin = -9999f;
