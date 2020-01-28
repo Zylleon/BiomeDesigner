@@ -31,10 +31,8 @@ namespace ZMapDesigner
 
         public static bool TerrainFrom_Prefix(IntVec3 c, Map map, float elevation, float fertility, RiverMaker river, bool preferSolid, ref TerrainDef __result)
         {
-            Log.Message("Method Fired");
             if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
             {
-                Log.Message("Found extension");
                 if (map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.mountainSettings != null)
                 {
                     __result = Gensteps_Vanilla.MapUtility.TerrainFrom(c, map, elevation, fertility, river, preferSolid);
@@ -48,6 +46,7 @@ namespace ZMapDesigner
 
 
     #region biome map settings
+
     // adapted from RF-Archipelagos
     [HarmonyPatch(typeof(RimWorld.Planet.World))]
     [HarmonyPatch(nameof(RimWorld.Planet.World.CoastDirectionAt))]
@@ -120,6 +119,26 @@ namespace ZMapDesigner
     }
 
 
+    //[HarmonyPatch(typeof(RimWorld.GenStep_RocksFromGrid))]
+    //[HarmonyPatch(nameof(RimWorld.GenStep_RocksFromGrid.Generate))]
+    //static class BiomeMapSettings_RocksFromGrid
+    //{
+    //    static bool Prefix(Map map, GenStepParams parms)
+    //    {
+    //        if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
+    //        {
+    //            if (map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.mountainSettings != null)
+    //            {
+    //                Gensteps_Vanilla.GenStep_ZMDRocksFromGrid genStep = new Gensteps_Vanilla.GenStep_ZMDRocksFromGrid();
+    //                genStep.Generate(map, parms);
+    //                return false;
+    //            }
+    //        }
+    //        return true;
+    //    }
+    //}
+
+
     #endregion
 
 
@@ -170,36 +189,36 @@ namespace ZMapDesigner
 
 
 
+    #region debug
+    //[HarmonyPatch(typeof(RimWorld.Page_SelectStartingSite))]
+    //[HarmonyPatch(nameof(RimWorld.Page_SelectStartingSite.PostOpen))]
+    //static class PostOpen
+    //{
+    //    static bool Prefix()
+    //    {
+    //        List<Tile> tiles = Find.World.grid.tiles;
+    //        List<BiomeDef> biomesList = DefDatabase<BiomeDef>.AllDefsListForReading;
 
-        //[HarmonyPatch(typeof(RimWorld.Page_SelectStartingSite))]
-        //[HarmonyPatch(nameof(RimWorld.Page_SelectStartingSite.PostOpen))]
-        //static class PostOpen
-        //{
-        //    static bool Prefix()
-        //    {
-        //        List<Tile> tiles = Find.World.grid.tiles;
-        //        List<BiomeDef> biomesList = DefDatabase<BiomeDef>.AllDefsListForReading;
-
-        //    // counts each biome
-        //        //foreach (var g in tiles.GroupBy(t => t.biome)
-        //        //            .Select(group => new {
-        //        //                Biome = group.Key,
-        //        //                Count = group.Count()
-        //        //            }).OrderBy(y => y.Biome.defName))
-        //        //{
-        //        //    Log.Message(String.Format("{0} - {1}", g.Biome.defName, g.Count));
-        //        //}
-
-
-        //    //float eleMax = tiles.Max(t => t.elevation);
-        //    //float eleMin = tiles.Min(t => t.elevation);
-        //    //Log.Message("Elevations: " + eleMin + ", " + eleMax);
+    //    // counts each biome
+    //        //foreach (var g in tiles.GroupBy(t => t.biome)
+    //        //            .Select(group => new {
+    //        //                Biome = group.Key,
+    //        //                Count = group.Count()
+    //        //            }).OrderBy(y => y.Biome.defName))
+    //        //{
+    //        //    Log.Message(String.Format("{0} - {1}", g.Biome.defName, g.Count));
+    //        //}
 
 
-        //        return true;
-        //    }
-        //}
-        
+    //    //float eleMax = tiles.Max(t => t.elevation);
+    //    //float eleMin = tiles.Min(t => t.elevation);
+    //    //Log.Message("Elevations: " + eleMin + ", " + eleMax);
 
+
+    //        return true;
+    //    }
+    //}
+
+    #endregion
 
 }

@@ -16,8 +16,7 @@ namespace ZMapDesigner.Gensteps_Vanilla
 
             MountainSettings settings = map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.mountainSettings;
 
-            Log.Message("Allow gravel " + settings.allowGravel);
-            Log.Message("Allow stone terrain " + settings.allowStoneTerrain);
+            //elevation *= settings.elevationTuning;
 
             TerrainDef riverTerrain = null;
             if (river != null)
@@ -53,20 +52,21 @@ namespace ZMapDesigner.Gensteps_Vanilla
                     return terrainDef2;
                 }
             }
-            if(settings.allowGravel)                                        // gravel around mountains
-            {
-                if (elevation > gravelThreshhold)
-                {
-                    return TerrainDefOf.Gravel;
-                }
-            }
-            if(settings.allowStoneTerrain)                                  // stone around mountains
+            if (settings.allowStoneTerrain)                                  // stone around mountains
             {
                 if (elevation >= stoneThreshhold)
                 {
                     return GenStep_RocksFromGrid.RockDefAt(c).building.naturalTerrain;
                 }
             }
+            if (settings.allowGravel)                                        // gravel around mountains
+            {
+                if (elevation > gravelThreshhold)
+                {
+                    return TerrainDefOf.Gravel;
+                }
+            }
+           
             
             terrainDef2 = TerrainThreshold.TerrainAtValue(map.Biome.terrainsByFertility, fertility);
             if (terrainDef2 != null)                                        // terrains by fertility

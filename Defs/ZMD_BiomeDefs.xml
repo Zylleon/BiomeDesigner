@@ -84,19 +84,23 @@
 	<defName>ZMD_DevTest</defName>
     <label>test</label>
     <description>test biome</description>
- 
+	
+	<workerClass>ZMapDesigner.BiomeWorker_Test</workerClass>
+	
 	<modExtensions>
 		<li Class="ZMapDesigner.ZMDBiomeModExtension">
 			<biomeMapSettings>	
 				<caves>true</caves>
 				<coast>true</coast>
 				<mountainSettings>
+					<elevationTuning>1.0</elevationTuning>
 					<allowStoneTerrain>true</allowStoneTerrain>
 					<allowGravel>true</allowGravel>
 					<frequency>0.021</frequency>
 					<lacunarity>2.0</lacunarity>
 				</mountainSettings>
 			</biomeMapSettings>
+			
 			<worldMapSettings>
 				<patchSize>3</patchSize>
 				<commonality>10</commonality>
@@ -111,6 +115,7 @@
 				<elevationMin>0</elevationMin>
 				<elevationMax>9999</elevationMax>
 			</worldMapSettings>
+			
 		</li>
 	</modExtensions>
 

@@ -53,6 +53,8 @@ namespace ZMapDesigner.Gensteps_Vanilla
                     hillTuning = MapGenTuning.ElevationFactorImpassableMountains;
                     break;
             }
+
+
             moduleBase = new Multiply(moduleBase, new Const((double)hillTuning));
             NoiseDebugUI.StoreNoiseRender(moduleBase, "elev world-factored");
             if (map.TileInfo.hilliness == Hilliness.Mountainous || map.TileInfo.hilliness == Hilliness.Impassable)
@@ -87,11 +89,14 @@ namespace ZMapDesigner.Gensteps_Vanilla
                 moduleBase = new Add(moduleBase, moduleBase2);
                 NoiseDebugUI.StoreNoiseRender(moduleBase, "elev + mountain");
             }
-            float b = (!map.TileInfo.WaterCovered) ? 3.40282347E+38f : 0f;
+
+            //float b = (!map.TileInfo.WaterCovered) ? 3.40282347E+38f : 0f;
+            float b = 3.40282347E+38f;
             MapGenFloatGrid elevation = MapGenerator.Elevation;
+            float elevationTuning = settings.elevationTuning;
             foreach (IntVec3 current in map.AllCells)
             {
-                elevation[current] = Mathf.Min(moduleBase.GetValue(current), b);
+                elevation[current] = elevationTuning * Mathf.Min(moduleBase.GetValue(current), b);
             }
             
             //fertility

@@ -43,7 +43,9 @@ namespace ZMapDesigner
 
     public class MountainSettings
     {
-        public bool allowMountains = true;          // NOT IMPLEMENTED yet
+        //public bool allowMountains = true;          
+
+        public float elevationTuning = 1f;
 
         public bool allowStoneTerrain = true;       // allows rough stone ground around mountains
         public bool allowGravel = true;             // allows gravel around mountains

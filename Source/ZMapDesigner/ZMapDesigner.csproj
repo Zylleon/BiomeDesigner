@@ -53,6 +53,7 @@
     <Compile Include="BiomeWorker_NoDefaultSpawn.cs" />
     <Compile Include="BiomeWorker_Test.cs" />
     <Compile Include="Gensteps_Vanilla\GenStep_ZMDElevationFertility.cs" />
+    <Compile Include="Gensteps_Vanilla\GenStep_ZMDRocksFromGrid.cs" />
     <Compile Include="Gensteps_Vanilla\MapUtility.cs" />
     <Compile Include="GenSteps_ZMD\GeometryUtility.cs" />
     <Compile Include="GenSteps_ZMD\GenStep_CenterShapeIrregular.cs" />
