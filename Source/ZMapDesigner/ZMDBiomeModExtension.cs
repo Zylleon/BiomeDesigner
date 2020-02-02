@@ -29,7 +29,6 @@ namespace ZMapDesigner
         // true = force caves, false = forbid caves, null = vanilla behaviour. Caves may not actually show up on maps with insufficient rock.
         public bool? caves = null;
 
-
         // TODO: implement the rest
         public bool deepOre = true;
         public bool geysers = true;
@@ -43,10 +42,7 @@ namespace ZMapDesigner
 
     public class MountainSettings
     {
-        //public bool allowMountains = true;          
-
-        public float elevationTuning = 1f;
-
+        public float elevationTuning = 1f;          // elevation multiplier. Affects mountains, caves, stone/gravel terrain, etc. 
         public bool allowStoneTerrain = true;       // allows rough stone ground around mountains
         public bool allowGravel = true;             // allows gravel around mountains
         public float frequency = 0.021f;            // higher numbers = more small mountains
@@ -102,7 +98,7 @@ namespace ZMapDesigner
             
         }
 
-        public int commonality = 10;
+        public float commonality = 0.1f;
 
         public int NumberOfTiles()
         {
