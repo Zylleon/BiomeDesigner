@@ -6,6 +6,7 @@ using RimWorld;
 using Verse;
 using Harmony;
 using System.Reflection;
+using System.Reflection.Emit;
 using RimWorld.Planet;
 
 namespace ZMapDesigner
@@ -98,7 +99,6 @@ namespace ZMapDesigner
     }
 
 
-
     [HarmonyPatch(typeof(RimWorld.GenStep_ElevationFertility))]
     [HarmonyPatch(nameof(RimWorld.GenStep_ElevationFertility.Generate))]
     static class BiomeMapSettings_ElevationFertility
@@ -117,6 +117,66 @@ namespace ZMapDesigner
             return true;
         }
     }
+
+    #region ruins
+
+    [HarmonyPatch(typeof(RimWorld.GenStep_ScatterRuinsSimple))]
+    [HarmonyPatch(nameof(RimWorld.GenStep_ScatterRuinsSimple.Generate))]
+    static class BiomeMapSettings_Ruins
+    {
+        static bool Prefix(Map map, GenStepParams parms)
+        {
+            if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
+            {
+                if (map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.ruins == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    
+    #endregion
+
+
+    [HarmonyPatch(typeof(Verse.GenStep_Scatterer))]
+    [HarmonyPatch(nameof(Verse.GenStep_Scatterer.Generate))]
+    static class Scatterer_WaterBiomeFix
+    {
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            FieldInfo waterBiome = AccessTools.Field(type: typeof(GenStep_Scatterer), name: nameof(GenStep_Scatterer.allowInWaterBiome));
+
+            CodeInstruction[] codeInstructions = instructions as CodeInstruction[] ?? instructions.ToArray();
+            foreach (CodeInstruction instruction in codeInstructions)
+            {
+                if (instruction.opcode == OpCodes.Ldfld && instruction.operand == waterBiome)
+                {
+                    yield return new CodeInstruction(opcode: OpCodes.Ldarg_1);
+                    yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(Scatterer_WaterBiomeFix), name: nameof(Scatterer_WaterBiomeFix.AllowedInWaterBiome)));
+                }
+                else
+                {
+                    yield return instruction;
+                }
+            }
+        }
+
+        static bool AllowedInWaterBiome(GenStep_Scatterer step, Map map)
+        {
+            if(map.Biome.HasModExtension<ZMDBiomeModExtension>())
+            {
+                return true;
+            }
+            return step.allowInWaterBiome;
+        }
+
+    }
+
+
+
 
 
     //[HarmonyPatch(typeof(RimWorld.GenStep_RocksFromGrid))]

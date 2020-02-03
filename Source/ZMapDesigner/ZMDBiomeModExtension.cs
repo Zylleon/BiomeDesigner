@@ -13,11 +13,9 @@ namespace ZMapDesigner
         public WorldMapSettings worldMapSettings;
         public BiomeMapSettings biomeMapSettings;
 
-
     }
 
-   
-    
+
     public class BiomeMapSettings
     {
         // uses vanilla defaults if not specified
@@ -25,16 +23,16 @@ namespace ZMapDesigner
 
         // allows beaches if true. Disables beaches if false. Never forces beaches.
         public bool coast = true;
-
         // true = force caves, false = forbid caves, null = vanilla behaviour. Caves may not actually show up on maps with insufficient rock.
         public bool? caves = null;
+
+        public bool ruins = true;
 
         // TODO: implement the rest
         public bool deepOre = true;
         public bool geysers = true;
         public bool mountains = true;
         public bool mountainOre = true;
-        public bool ruins = true;
         public bool shrines = true;
         public bool rockChunks = true;
     }
