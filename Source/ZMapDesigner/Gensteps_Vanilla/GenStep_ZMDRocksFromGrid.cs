@@ -58,7 +58,7 @@ namespace ZMapDesigner.Gensteps_Vanilla
         public override void Generate(Map map, GenStepParams parms)
         {
 
-            MountainSettings settings = map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.mountainSettings;
+            //MountainSettings settings = map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.mountainSettings;
 
             //if (map.TileInfo.WaterCovered)
             //{

@@ -27,10 +27,10 @@ namespace ZMapDesigner
         public bool? caves = null;
 
         public bool ruins = true;
+        public bool geysers = true;
 
         // TODO: implement the rest
         public bool deepOre = true;
-        public bool geysers = true;
         public bool mountains = true;
         public bool mountainOre = true;
         public bool shrines = true;

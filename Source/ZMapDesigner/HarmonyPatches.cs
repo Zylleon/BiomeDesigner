@@ -26,6 +26,7 @@ namespace ZMapDesigner
             HarmonyMethod prefixmethod = new HarmonyMethod(typeof(ZMapDesigner.HarmonyPatches).GetMethod("TerrainFrom_Prefix"));
             harmony.Patch(targetmethod, prefixmethod, null);
 
+
             harmony.PatchAll();
         }
 
@@ -137,13 +138,9 @@ namespace ZMapDesigner
         }
     }
 
-    
-    #endregion
-
-
     [HarmonyPatch(typeof(Verse.GenStep_Scatterer))]
     [HarmonyPatch(nameof(Verse.GenStep_Scatterer.Generate))]
-    static class Scatterer_WaterBiomeFix
+    static class Scatterer_WaterBiomeFix                // simple ruins, 1st piece of shrines
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -176,27 +173,110 @@ namespace ZMapDesigner
     }
 
 
-
+    #endregion
 
 
     //[HarmonyPatch(typeof(RimWorld.GenStep_RocksFromGrid))]
     //[HarmonyPatch(nameof(RimWorld.GenStep_RocksFromGrid.Generate))]
-    //static class BiomeMapSettings_RocksFromGrid
+    //static class RocksFromGrid_WaterBiomeFix
     //{
-    //    static bool Prefix(Map map, GenStepParams parms)
+    //    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     //    {
-    //        if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
+    //        MethodInfo tileInfo = AccessTools.Property(type: typeof(Verse.Map), name: nameof(Verse.Map.TileInfo)).GetGetMethod();
+    //        MethodInfo waterCovered = AccessTools.Property(type: typeof(RimWorld.Planet.Tile), name: nameof(RimWorld.Planet.Tile.WaterCovered)).GetGetMethod();
+
+    //        CodeInstruction[] codeInstructions = instructions as CodeInstruction[] ?? instructions.ToArray();
+    //        foreach (CodeInstruction instruction in codeInstructions)
     //        {
-    //            if (map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.mountainSettings != null)
+    //            //if (instruction.opcode == OpCodes.Callvirt && instruction.operand == waterCovered)
+    //            if (instruction.opcode == OpCodes.Callvirt)
     //            {
-    //                Gensteps_Vanilla.GenStep_ZMDRocksFromGrid genStep = new Gensteps_Vanilla.GenStep_ZMDRocksFromGrid();
-    //                genStep.Generate(map, parms);
-    //                return false;
+    //                if (instruction.operand == tileInfo)
+    //                {
+    //                    Log.Message("found tile info");
+    //                }
+    //                else if (instruction.operand == waterCovered)
+    //                {
+    //                    Log.Message("found watercovered");
+    //                    //yield return instruction;
+
+    //                    //yield return new CodeInstruction(opcode: OpCodes.Ldarg_1);
+    //                    yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(RocksFromGrid_WaterBiomeFix), name: nameof(RocksFromGrid_WaterBiomeFix.IsWaterCovered)));
+    //                }
+    //                else
+    //                {
+    //                    yield return instruction;
+    //                }
+    //            }
+    //            else
+    //            {
+    //                yield return instruction;
     //            }
     //        }
-    //        return true;
+    //    }
+
+    //    static bool IsWaterCovered(GenStep_Scatterer step, Map map)
+    //    {
+    //        Log.Message("Pretend it's not water covered");
+    //        if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
+    //        {
+    //            return false;
+    //        }
+    //        return map.TileInfo.WaterCovered;
     //    }
     //}
+
+
+
+
+    [HarmonyPatch(typeof(Verse.GenStep_ScatterThings))]
+    [HarmonyPatch(nameof(Verse.GenStep_ScatterThings.Generate))]
+    static class SteamGeysers_WaterBiomeFix
+    {
+        static bool Prefix(Map map, GenStepParams parms)
+        {
+            if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
+            {
+                if (map.Biome.GetModExtension<ZMDBiomeModExtension>().biomeMapSettings.geysers == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            FieldInfo waterBiome = AccessTools.Field(type: typeof(GenStep_Scatterer), name: nameof(GenStep_Scatterer.allowInWaterBiome));
+
+            CodeInstruction[] codeInstructions = instructions as CodeInstruction[] ?? instructions.ToArray();
+            foreach (CodeInstruction instruction in codeInstructions)
+            {
+                if (instruction.opcode == OpCodes.Ldfld && instruction.operand == waterBiome)
+                {
+                    yield return new CodeInstruction(opcode: OpCodes.Ldarg_1);
+                    yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(Scatterer_WaterBiomeFix), name: nameof(SteamGeysers_WaterBiomeFix.AllowedInWaterBiome)));
+                }
+                else
+                {
+                    yield return instruction;
+                }
+            }
+        }
+
+        static bool AllowedInWaterBiome(GenStep_ScatterThings step, Map map)
+        {
+            if(step.def.defName == "SteamGeysers")
+            {
+                if (map.Biome.HasModExtension<ZMDBiomeModExtension>())
+                {
+                    return true;
+                }
+            }
+            return step.allowInWaterBiome;
+        }
+
+    }
 
 
     #endregion
@@ -229,20 +309,7 @@ namespace ZMapDesigner
             }
         }
     }
-
-
-
-
-    //[HarmonyPatch(typeof(RimWorld.Planet.WorldGenerator))]
-    //[HarmonyPatch(nameof(RimWorld.Planet.WorldGenerator.GenerateWorld))]
-    //static class WorldGenerator_GenerateWorld
-    //{
-    //    static void Postfix(Map map, GenStepParams parms)
-    //    {
-    //        Log.Message("This is a test");
-    //    }
-    //}
-
+    
 
     #endregion
 
